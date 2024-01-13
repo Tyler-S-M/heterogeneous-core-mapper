@@ -9,6 +9,7 @@ Testing Heterogeneous core differences
 #include <chrono>
 #include <vector>
 #include <immintrin.h>
+#include <iomanip>
 #include <stdio.h>
 
 #include "runners.hpp"
@@ -22,7 +23,7 @@ void print(std::string name, std::vector<std::vector<int>> times){
     for (int i = 0; i < times.size(); i++){
             
         //get best core
-        int lowest = 10000000;
+        int lowest = times.at(i).at(0);
         int lowest_idx = 0;
         for (int z = 0; z < times.at(i).size(); z++){
             if (times.at(i).at(z) < lowest){
@@ -42,10 +43,23 @@ void print(std::string name, std::vector<std::vector<int>> times){
     }
 
     std::cout << "percentage differences Deltas Across Heterogeneous Cores With " << " tests" << ":\n";
-    for(int i = 0; i < return_values.size(); i++){
-        for(int j = 0; j < return_values.at(i).size(); j++){
-        std::cout << "Core: " << j << ": " << int(100*return_values.at(i).at(j)) << "% speed" << std::endl;
-        }
+    std::cout << std::setw(30) << "";
+    std::cout << std::left << std::setw(30) << "Int" << "          ";
+    std::cout << std::left << std::setw(30) << "Float" << "          ";
+    std::cout << std::left << std::setw(30) << "Vector" << "          " << std::endl;
+
+    for(int i = 0; i < return_values.at(0).size(); i++){
+
+        std::string name = "Core " + std::to_string(i);
+
+        std::cout << std::setw(30) << name;
+        for(int j = 0; j < return_values.size(); j++)
+            std::cout << std::left << std::setw(30) << 100*return_values.at(j).at(i) << "          ";
+        std::cout << std::endl;
+
+        //for(int j = 0; j < return_values.at(i).size(); j++){
+        //std::cout << "Core: " << j << ": " << int(100*return_values.at(i).at(j)) << "% speed" << std::endl;
+        //}
     }
 }
 
