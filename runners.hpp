@@ -79,7 +79,7 @@ std::vector<int> run_test(){
             }
 
             auto stop = high_resolution_clock::now();
-            auto duration = duration_cast<microseconds>(stop - start);
+            auto duration = duration_cast<nanoseconds>(stop - start);
 
             local_times.push_back(duration.count());
 
