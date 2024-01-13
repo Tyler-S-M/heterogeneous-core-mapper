@@ -13,13 +13,23 @@ Testing Heterogeneous core differences
 
 #include "runners.hpp"
 
+void print(std::string name, std::vector<int> times){
+    std::cout << "Time Deltas Across Heterogeneous Cores With " << name << " tests" << ":\n";
+    for(int i = 0; i < times.size(); i++){
+        std::cout << "Core: " << i << ": " << times.at(i) << "ns" << std::endl;
+    }
+}
+
 int main(){
     
-    run_test<int>();
+    std::vector<int> int_runs = run_test<int>();
+    print("int", int_runs);
 
-    run_test<float>();
+    std::vector<int> float_runs = run_test<float>();
+    print("float", float_runs);
 
-    run_test<void*>();
+    std::vector<int> vector_runs = run_test<void*>();
+    print("vector", vector_runs);
 
     return 0;
 }

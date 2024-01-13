@@ -32,8 +32,6 @@ void do_matrix_calc(int mat1[N][N], int mat2[N][N], int result[N][N])
                 vec_mat2 = _mm256_loadu_si256((__m256i*)&mat2[j][k]);
                 vec_multi_res = _mm256_loadu_si256((__m256i*)&result[i][k]);
                 vec_multi_res = _mm256_add_epi32(vec_multi_res ,_mm256_mullo_epi32(vec_mat1, vec_mat2));
-
-                _mm256_storeu_si256((__m256i*)&result[i][k], vec_multi_res);
             }
         }
     }

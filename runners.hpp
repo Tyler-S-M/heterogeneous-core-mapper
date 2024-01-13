@@ -90,12 +90,6 @@ std::vector<int> run_test(){
 
         times.push_back(real_time/5);
     }
-    
-    //read out times
-    std::cout << "Time Deltas Across Heterogeneous Cores With " << name << " tests" << ":\n";
-    for(int i = 0; i < processor_count; i++){
-        std::cout << "Core: " << i << ": " << times.at(i) << "ns" << std::endl;
-    }
 
     return times;
 
