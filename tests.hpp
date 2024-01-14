@@ -51,14 +51,15 @@
             for (j = 0; j < N; ++j){
                 //Stores one element in mat1 and use it in all computations needed before proceeding
                 //Stores as vector to increase computations per cycle
-                vst1q_u8(mat1[i][j], vec_multi_res[1]);
+                intlv_rgb = vld3q_u8(rgb+3*16*i);
+                vst1q_u8(mat1[i][j], vec_multi_res.val[1]);
 
                 for (k = 0; k < N; k += 8){
-                    vst1q_u8(mat2[j][k], vec_multi_res[2]);
-                    vst1q_u8(result[i][k], vec_multi_res[0]);
+                    vst1q_u8(mat2[j][k], vec_multi_res.val[2]);
+                    vst1q_u8(result[i][k], vec_multi_res.val[0]);
 
                     //mult -> add -> store
-                    vst1q_u8(vaddq_f32(vec_multi_res,  vmul_f32(vec_mat1, vec_mat2)), vec_multi_res[0]);
+                    vst1q_u8(vaddq_f32(vec_multi_res.val[0],  vmul_u32(vec_multi_res.val[1], vec_multi_res.val[2])), vec_multi_res.val[0]);
                 }
             }
         }
