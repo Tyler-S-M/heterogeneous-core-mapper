@@ -38,6 +38,7 @@ template <typename T>
 std::vector<int> run_test(){
 
     T V;
+    int Z[1][1];
     std::string name = "";
 
     __m256i hello;
@@ -50,15 +51,8 @@ std::vector<int> run_test(){
     
     std::vector<int> times;
 
-    if (std::is_same_v<decltype(V), decltype(1)>){
-        name = "int";
-    }
-    else if (std::is_same_v<decltype(V), decltype(float(1.0))>){
-        name = "float";
-    }
-    else{
-        name = "vector";
-        
+    if (std::is_same_v<decltype(V), decltype(Z)>){
+
         //reset vecs
         for (int x = 0; x < N; x++){
             for (int y = 0; y < N; y++){

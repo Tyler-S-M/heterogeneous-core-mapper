@@ -116,7 +116,7 @@ int main(){
     std::vector<int> float_runs = run_test<float>();
     runs.push_back(float_runs);
 
-    std::vector<int> vector_runs = run_test<void*>();
+    std::vector<int> vector_runs = run_test<int[1][1]>();
     runs.push_back(vector_runs);
 
     print("vector", runs);
