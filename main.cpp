@@ -75,12 +75,8 @@ void print(std::string name, std::vector<std::vector<int>> times){
     }
 
     //push first value as a center
-    std::vector<int> holding;
-    holding.push_back(final_vals.at(0));
-    std::vector<int> holding_idx;
-    holding_idx.push_back(0);
-    clusters.push_back(holding);
-    clusters_idx.push_back(holding_idx);
+    clusters.push_back({std::vector<int>({final_vals.at(0)})});
+    clusters_idx.push_back({std::vector<int>({0})});
 
     //cluster
     for (int i = 1; i < final_vals.size(); i++){
@@ -98,12 +94,8 @@ void print(std::string name, std::vector<std::vector<int>> times){
 
         //make new cluster if it doesn't fit any
         if (!added){
-            std::vector<int> holding;
-            holding.push_back(final_vals.at(i));
-            std::vector<int> holding_idx;
-            holding_idx.push_back(i);
-            clusters.push_back(holding);
-            clusters_idx.push_back(holding_idx);
+            clusters.push_back({std::vector<int>({final_vals.at(i)})});
+            clusters_idx.push_back(std::vector<int>({i}));
         }
     }
 
