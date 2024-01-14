@@ -14,7 +14,7 @@ Testing Heterogeneous core differences
 
 #include "runners.hpp"
 
-void print(std::string name, std::vector<std::vector<int>> times){
+void print(std::vector<std::vector<int>> times){
 
     //return vector
     std::vector<std::vector<double>> return_values;
@@ -31,6 +31,7 @@ void print(std::string name, std::vector<std::vector<int>> times){
                 lowest_idx = z;
             }
         }
+        
         lowest_vals.push_back(lowest);
 
         //relate all other cores as percentage of that performance
@@ -119,7 +120,7 @@ int main(){
     std::vector<int> vector_runs = run_test<int[1][1]>();
     runs.push_back(vector_runs);
 
-    print("vector", runs);
+    print(runs);
 
     return 0;
 }

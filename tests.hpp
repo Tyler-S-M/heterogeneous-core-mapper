@@ -12,8 +12,7 @@
 #define TEST_SIZE 10000
 #define N 100
 
-void do_matrix_calc(int mat1[N][N], int mat2[N][N], int result[N][N])
-{
+void do_matrix_calc(int mat1[N][N], int mat2[N][N], int result[N][N]){
     __m256i vec_multi_res = _mm256_setzero_si256();
     __m256i vec_mat1 = _mm256_setzero_si256();
     __m256i vec_mat2 = _mm256_setzero_si256();
