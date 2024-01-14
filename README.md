@@ -7,7 +7,7 @@ It shows these numbers as well as clusters the averaged results to determine cor
 # Example Output
 Intel 12900k
 ```
-percentage differences Deltas Across Heterogeneous Cores With  tests:
+Individual core performance in relation to the fastest core in each test:
                               Int                                     Float                                   Vector                                  
 Core 0                        90.0563                                 94.486                                  83.386                                  
 Core 1                        95.0869                                 100                                     99.0852                                 

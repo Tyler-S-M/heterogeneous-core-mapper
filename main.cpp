@@ -31,7 +31,7 @@ void print(std::vector<std::vector<int>> times){
                 lowest_idx = z;
             }
         }
-        
+
         lowest_vals.push_back(lowest);
 
         //relate all other cores as percentage of that performance
@@ -43,7 +43,7 @@ void print(std::vector<std::vector<int>> times){
         return_values.push_back(hold_vec);
     }
 
-    std::cout << "percentage differences Deltas Across Heterogeneous Cores With " << " tests" << ":\n";
+    std::cout << "Individual core performance in relation to the fastest core in each test:\n";
     std::cout << std::setw(30) << "";
     std::cout << std::left << std::setw(30) << "Int" << "          ";
     std::cout << std::left << std::setw(30) << "Float" << "          ";
