@@ -54,7 +54,7 @@ int do_int_calc(){
     int j = 0.0;
     
     //just add pi a lot
-    for(int i = 0; i < int((TEST_SIZE*TEST_SIZE)/2); i++){
+    for(int i = 0; i < int((TEST_SIZE*TEST_SIZE)/6); i++){
         j += 3;
     }
     

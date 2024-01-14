@@ -15,11 +15,23 @@ using namespace std::chrono;
 
 cpu_set_t  mask;
 
-void assignToThisCore(int core_id)
-{
+void assignToThisCore(int core_id){
     CPU_ZERO(&mask);
     CPU_SET(core_id, &mask);
     sched_setaffinity(0, sizeof(mask), &mask);
+}
+
+double maxValue(const std::vector<int>& vec){
+    int val_max = vec[0]; // What could go wrong on this line?
+    int max_idx;
+
+    for (int i = 0; i < vec.size(); ++i){
+        if (val_max < vec[i]){
+            val_max = vec[i];
+            max_idx = i;
+        }
+    }
+    return max_idx;
 }
 
 template <typename T>
@@ -64,7 +76,7 @@ std::vector<int> run_test(){
         std::vector<int> local_times;
         int real_time = 0;
 
-        for (int k = 0; k < 5; k++){
+        for (int k = 0; k < 10; k++){
 
             auto start = high_resolution_clock::now();
 
@@ -85,8 +97,14 @@ std::vector<int> run_test(){
 
         }
 
-        for (int k = 0; k < local_times.size(); k++)
-            real_time += local_times[k];
+        //remove worst
+        int ignore = maxValue(local_times);
+
+        //average
+        for (int k = 0; k < local_times.size(); k++){
+            if(k != ignore)
+                real_time += local_times[k];
+        }
 
         times.push_back(real_time/5);
     }

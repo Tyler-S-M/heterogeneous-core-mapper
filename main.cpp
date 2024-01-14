@@ -57,8 +57,13 @@ void print(std::string name, std::vector<std::vector<int>> times){
             std::cout << std::left << std::setw(30) << 100*return_values.at(j).at(i) << "          ";
         std::cout << std::endl;
 
-        //for(int j = 0; j < return_values.at(i).size(); j++){
-        //std::cout << "Core: " << j << ": " << int(100*return_values.at(i).at(j)) << "% speed" << std::endl;
+        /*std::vector<int> temp_solution;
+        std::cout << "Predicted Topography:\n";
+        for(int j = 0; j < return_values.at(i).size(); j++){
+            for(int j = 0; j < return_values.at(i).size(); j++){
+            }
+        }*/
+        
         //}
     }
 }
