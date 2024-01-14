@@ -56,15 +56,62 @@ void print(std::string name, std::vector<std::vector<int>> times){
         for(int j = 0; j < return_values.size(); j++)
             std::cout << std::left << std::setw(30) << 100*return_values.at(j).at(i) << "          ";
         std::cout << std::endl;
+    }
+    std::cout << std::endl;
 
-        /*std::vector<int> temp_solution;
-        std::cout << "Predicted Topography:\n";
-        for(int j = 0; j < return_values.at(i).size(); j++){
-            for(int j = 0; j < return_values.at(i).size(); j++){
-            }
-        }*/
+    //to sort them, cluster them together based on some difference
+    //threshold. May be better ways to do this
+    std::vector<int> final_vals;
+    std::vector<std::vector<int>> clusters;
+    std::vector<std::vector<int>> clusters_idx;
+    const int eps = 20;
+
+    for (int i = 0; i < return_values.at(0).size(); i++){
+        int hold = 0;
+        for (int j = 0; j < return_values.size(); j++){
+            hold += 100 * return_values.at(j).at(i);
+        }
+        final_vals.push_back(int(hold/return_values.size()));
+    }
+
+    //push first value as a center
+    std::vector<int> holding;
+    holding.push_back(final_vals.at(0));
+    std::vector<int> holding_idx;
+    holding_idx.push_back(0);
+    clusters.push_back(holding);
+    clusters_idx.push_back(holding_idx);
+
+    //cluster
+    for (int i = 1; i < final_vals.size(); i++){
         
-        //}
+        bool added = false;
+        for(int j = 0; j < clusters.size(); j++){
+
+            if (final_vals.at(i) > clusters.at(j).at(0) - 20 && final_vals.at(i) < clusters.at(j).at(0) + 20){
+                clusters.at(j).push_back(final_vals.at(i));
+                clusters_idx.at(j).push_back(i);
+                added = true;
+            }
+
+        }
+
+        //make new cluster if it doesn't fit any
+        if (!added){
+            std::vector<int> holding;
+            holding.push_back(final_vals.at(i));
+            std::vector<int> holding_idx;
+            holding_idx.push_back(i);
+            clusters.push_back(holding);
+            clusters_idx.push_back(holding_idx);
+        }
+    }
+
+    for (int i = 0; i < clusters_idx.size(); i++){
+        std::cout << char(65 + i) << "-Cores:\n";
+        for (int j = 0; j < clusters_idx.at(i).size(); j++){
+            std::cout << std::left << std::setw(30) << "Core " << clusters_idx.at(i).at(j) << std::endl;
+        }
     }
 }
 
