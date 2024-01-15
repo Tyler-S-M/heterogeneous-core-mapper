@@ -42,9 +42,18 @@ std::vector<int> run_test(){
     std::string name = "";
 
     __m256i hello;
-    int a[N][N];
-    int b[N][N];
-    int c[N][N];
+
+    #if defined(__x86_64__) || defined(_M_X64)
+        int a[N][N];
+        int b[N][N];
+        int c[N][N];
+
+    #elif defined(__aarch64__) || defined(_M_ARM64)
+        uint8_t a[N][N];
+        uint8_t b[N][N];
+        uint8_t c[N][N];
+
+    #endif
 
     //get all the cores
     const auto processor_count = std::thread::hardware_concurrency();
