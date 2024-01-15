@@ -66,7 +66,7 @@ std::vector<int> run_test(){
         for (int x = 0; x < N; x++){
             for (int y = 0; y < N; y++){
                 a[x][y] = x+y;
-                b[x][y] = x*y;
+                b[x][y] = int(x/2)+int(y/4);
                 c[x][y] = 0;
             }
         }
