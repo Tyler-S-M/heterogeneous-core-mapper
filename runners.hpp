@@ -82,7 +82,7 @@ std::vector<int> run_test(){
         std::vector<int> local_times;
         int real_time = 0;
 
-        for (int k = 0; k < 10; k++){
+        for (int k = 0; k < 150; k++){
 
             auto start = high_resolution_clock::now();
 
