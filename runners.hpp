@@ -97,22 +97,22 @@ std::vector<int> run_test(){
             }
 
             auto stop = high_resolution_clock::now();
-            auto duration = duration_cast<nanoseconds>(stop - start);
+            auto duration = duration_cast<microseconds>(stop - start);
 
             local_times.push_back(duration.count());
 
         }
 
         //remove worst
-        int ignore = maxValue(local_times);
+        //int ignore = maxValue(local_times);
 
         //average
         for (int k = 0; k < local_times.size(); k++){
-            if(k != ignore)
-                real_time += local_times[k];
+            //if(k != ignore)
+            real_time += local_times[k];
         }
 
-        times.push_back(real_time/5);
+        times.push_back(real_time/local_times.size());
     }
 
     return times;
