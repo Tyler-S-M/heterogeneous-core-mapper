@@ -6,8 +6,13 @@
 #include <thread>
 #include <chrono>
 #include <vector>
-#include <immintrin.h>
 #include <stdio.h>
+
+#if defined(__x86_64__) || defined(_M_X64)
+    #include <immintrin.h>
+#elif defined(__aarch64__) || defined(_M_ARM64)
+    #include <arm_neon.h>
+#endif
 
 #include "tests.hpp"
 
@@ -40,8 +45,6 @@ std::vector<int> run_test(){
     T V;
     int Z[1][1];
     std::string name = "";
-
-    __m256i hello;
 
     #if defined(__x86_64__) || defined(_M_X64)
         int a[N][N];
