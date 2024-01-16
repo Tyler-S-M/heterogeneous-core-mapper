@@ -45,20 +45,23 @@ namespace core_mapper {
         if (core_map.A_cores.is_active()){
             std::cout << "A-Cores:" << std::endl;
             for(int i = 0 ; i < core_map.A_cores.get_cores().size(); i++){
-                std::cout << std::left << std::setw(30) << "Core " << core_map.A_cores.get_cores().at(i) << std::endl << std::endl;
+                std::cout << std::left << std::setw(30) << "Core " << core_map.A_cores.get_cores().at(i) << std::endl;
             }
+            std::cout << std::endl;
         }
         if (core_map.B_cores.is_active()){
             std::cout << "B-Cores:" << std::endl;
             for(int i = 0 ; i < core_map.B_cores.get_cores().size(); i++){
-                std::cout << std::left << std::setw(30) << "Core " << core_map.B_cores.get_cores().at(i) << std::endl << std::endl;
+                std::cout << std::left << std::setw(30) << "Core " << core_map.B_cores.get_cores().at(i) << std::endl;
             }
+            std::cout << std::endl;
         }
         if (core_map.C_cores.is_active()){
             std::cout << "C-Cores:" << std::endl;
             for(int i = 0 ; i < core_map.C_cores.get_cores().size(); i++){
-                std::cout << std::left << std::setw(30) << "Core " << core_map.C_cores.get_cores().at(i) << std::endl << std::endl;
+                std::cout << std::left << std::setw(30) << "Core " << core_map.C_cores.get_cores().at(i) << std::endl;
             }
+            std::cout << std::endl;
         }
 
         std::cout << std::endl;
