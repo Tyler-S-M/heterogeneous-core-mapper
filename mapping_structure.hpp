@@ -2,8 +2,11 @@
 #define MAPPING_STRUCTURE_HPP
 
 #include <vector>
+#include <iostream>
+#include <iomanip>
 
 namespace core_mapper {
+
     class core_structure{
 
         private:
@@ -23,6 +26,7 @@ namespace core_mapper {
             float get_int_perf();
             float get_float_perf();
             float get_vec_perf();
+            bool is_active();
             std::vector<int> get_cores();
 
     };
@@ -44,5 +48,7 @@ namespace core_mapper {
             
             core_mapping(std::vector<int> A_Cores, float A_int_perf, float A_float_perf, float A_vec_perf);
     };
+
+    void print_core_mapping(core_mapping core_map);
 }
 #endif

@@ -3,7 +3,7 @@ MACHINE = $(shell uname -m)
 
 ifeq ($(MACHINE), i386)
 all: mapping_core.o
-	$(GCC) mapping_structure.o mapping_module.o main.cpp -o main -mavx2
+	$(GCC) mapping_core.o main.cpp -o main -mavx2
 else
 all: mapping_core.o
 	$(GCC) mapping_core.o main.cpp -o main

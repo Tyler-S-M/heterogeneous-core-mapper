@@ -38,7 +38,7 @@ namespace core_mapper {
         //FIXME: This is really... really.... really stupid
         for(int j = 0 ; j < idx.size(); j++){
             for(int i = 0 ; i < idx.size()-1; i++){
-                if (idx.at(i) > idx.at(i + 1)){
+                if (idx.at(i) < idx.at(i + 1)){
                     int store = idx.at(i);
                     int store_idx = idx_indices.at(i);
                     idx.at(i) = idx.at(i+1);
