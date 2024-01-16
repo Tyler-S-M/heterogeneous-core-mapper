@@ -42,9 +42,9 @@ namespace core_mapper {
                     int store = idx.at(i);
                     int store_idx = idx_indices.at(i);
                     idx.at(i) = idx.at(i+1);
-                    idx_indices.at(i) = idx.at(i+1);
+                    idx_indices.at(i) = idx_indices.at(i+1);
                     idx.at(i+1) = store;
-                    idx_indices.at(i) = store_idx;
+                    idx_indices.at(i+1) = store_idx;
                 }
             }
         }
