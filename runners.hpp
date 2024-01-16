@@ -79,10 +79,10 @@ std::vector<int> run_test(){
     for(int i = 0; i < processor_count; i++){
         assignToThisCore(i);
 
-        std::vector<int> local_times;
-        int real_time = 0;
+        std::vector<long> local_times;
+        long real_time = 1000000;
 
-        for (int k = 0; k < 150; k++){
+        for (int k = 0; k < 50; k++){
 
             auto start = high_resolution_clock::now();
 
@@ -108,11 +108,11 @@ std::vector<int> run_test(){
 
         //average
         for (int k = 0; k < local_times.size(); k++){
-            //if(k != ignore)
-            real_time += local_times[k];
+            if(real_time > local_times[k])
+                real_time = local_times[k];
         }
 
-        times.push_back(real_time/local_times.size());
+        times.push_back(real_time);///local_times.size());
     }
 
     return times;

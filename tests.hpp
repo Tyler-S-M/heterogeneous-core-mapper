@@ -71,7 +71,7 @@ float do_floating_calc(){
     float j = 0.0;
     
     //just add pi a lot
-    for(int i = 0; i < TEST_SIZE; i++){
+    for(int i = 0; i < int(TEST_SIZE*TEST_SIZE/20); i++){
         j += 3.141592653589793238462643383279;
     }
     
@@ -83,7 +83,7 @@ int do_int_calc(){
     int j = 0.0;
     
     //just add pi a lot
-    for(int i = 0; i < int((TEST_SIZE*TEST_SIZE)/6); i++){
+    for(int i = 0; i < int(TEST_SIZE*TEST_SIZE/20); i++){
         j += 3;
     }
     

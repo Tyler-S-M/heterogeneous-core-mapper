@@ -90,7 +90,7 @@ void print(std::vector<std::vector<int>> times){
         bool added = false;
         for(int j = 0; j < clusters.size(); j++){
 
-            if (final_vals.at(i) > clusters.at(j).at(0) - 20 && final_vals.at(i) < clusters.at(j).at(0) + 20){
+            if (final_vals.at(i) > clusters.at(j).at(0) - eps && final_vals.at(i) < clusters.at(j).at(0) + eps){
                 clusters.at(j).push_back(final_vals.at(i));
                 clusters_idx.at(j).push_back(i);
                 added = true;
@@ -105,8 +105,26 @@ void print(std::vector<std::vector<int>> times){
         }
     }
 
+    //figure out which cores are which tier (only A and B tier for now)
+    std::vector<char> cluster_names;
+    if (clusters_idx.size() == 2){
+        if (final_vals.at(clusters_idx.at(0).at(0)) > final_vals.at(clusters_idx.at(1).at(0))){
+            cluster_names.push_back('A');
+            cluster_names.push_back('B');
+        }
+        else if (final_vals.at(clusters_idx.at(0).at(0)) < final_vals.at(clusters_idx.at(1).at(0))){
+            cluster_names.push_back('B');
+            cluster_names.push_back('A');
+        }
+    }
+    else if (clusters_idx.size() == 1){
+        cluster_names.push_back('A');
+    }
+
+
+
     for (int i = 0; i < clusters_idx.size(); i++){
-        std::cout << char(65 + i) << "-Cores:\n";
+        std::cout << cluster_names.at(i) << "-Cores:\n";
         for (int j = 0; j < clusters_idx.at(i).size(); j++){
             std::cout << std::left << std::setw(30) << "Core " << clusters_idx.at(i).at(j) << std::endl;
         }
