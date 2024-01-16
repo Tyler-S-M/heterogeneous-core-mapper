@@ -4,7 +4,7 @@ Simple mapping untility which tracks the integer, floating and vector performanc
 The purpose is to get the performance of each core relative to the fastest P-Core and report each one back.
 It shows these numbers as well as clusters the averaged results to determine core type (A,B,C)
 
-# Example Output
+# Example Outputs
 Intel 12900k
 ```
 Individual core performance in relation to the fastest core in each test:
@@ -60,4 +60,37 @@ Core                          20
 Core                          21
 Core                          22
 Core                          23
+```
+
+Apple M2 Pro
+```
+Individual core performance in relation to the fastest core in each test:
+                              Int                                     Float                                   Vector                                  
+Core 0                        74.2072                                 83.4026                                 64.8366                                 
+Core 1                        73.8604                                 83.1828                                 64.8366                                 
+Core 2                        73.4496                                 83.2604                                 64.8366                                 
+Core 3                        73.8378                                 83.2604                                 64.9215                                 
+Core 4                        93.4749                                 99.3246                                 97.0646                                 
+Core 5                        93.3934                                 98.3323                                 100                                     
+Core 6                        94.178                                  99.8496                                 97.0646                                 
+Core 7                        93.6747                                 100                                     100                                     
+Core 8                        100                                     98.8316                                 100                                     
+Core 9                        96.256                                  98.1644                                 100                                     
+Core 10                       93.303                                  99.8842                                 100                                     
+Core 11                       96.16                                   99.9691                                 100                                     
+
+B-Cores:
+Core                          0
+Core                          1
+Core                          2
+Core                          3
+A-Cores:
+Core                          4
+Core                          5
+Core                          6
+Core                          7
+Core                          8
+Core                          9
+Core                          10
+Core                          11
 ```
