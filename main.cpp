@@ -10,140 +10,23 @@ Testing Heterogeneous core differences
 #include <vector>
 #include <iomanip>
 #include <stdio.h>
+#include <numeric>
+#include <algorithm> 
 
-#if defined(__x86_64__) || defined(_M_X64)
-    #include <immintrin.h>
-#elif defined(__aarch64__) || defined(_M_ARM64)
-    #include <arm_neon.h>
-#endif
-
-#include "runners.hpp"
-
-void print(std::vector<std::vector<int>> times){
-
-    //return vector
-    std::vector<std::vector<double>> return_values;
-    std::vector<double> lowest_vals;
-
-    for (int i = 0; i < times.size(); i++){
-            
-        //get best core
-        int lowest = times.at(i).at(0);
-        int lowest_idx = 0;
-        for (int z = 0; z < times.at(i).size(); z++){
-            if (times.at(i).at(z) < lowest){
-                lowest = times.at(i).at(z);
-                lowest_idx = z;
-            }
-        }
-
-        lowest_vals.push_back(lowest);
-
-        //relate all other cores as percentage of that performance
-        std::vector<double> hold_vec;
-        for (int z = 0; z < times.at(i).size(); z++)
-            hold_vec.push_back(float(lowest_vals.at(i))/float(times.at(i).at(z)));
-
-        //add to end
-        return_values.push_back(hold_vec);
-    }
-
-    std::cout << "Individual core performance in relation to the fastest core in each test:\n";
-    std::cout << std::setw(30) << "";
-    std::cout << std::left << std::setw(30) << "Int" << "          ";
-    std::cout << std::left << std::setw(30) << "Float" << "          ";
-    std::cout << std::left << std::setw(30) << "Vector" << "          " << std::endl;
-
-    for(int i = 0; i < return_values.at(0).size(); i++){
-
-        std::string name = "Core " + std::to_string(i);
-
-        std::cout << std::setw(30) << name;
-        for(int j = 0; j < return_values.size(); j++)
-            std::cout << std::left << std::setw(30) << 100*return_values.at(j).at(i) << "          ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-
-    //to sort them, cluster them together based on some difference
-    //threshold. May be better ways to do this
-    std::vector<int> final_vals;
-    std::vector<std::vector<int>> clusters;
-    std::vector<std::vector<int>> clusters_idx;
-    const int eps = 20;
-
-    for (int i = 0; i < return_values.at(0).size(); i++){
-        int hold = 0;
-        for (int j = 0; j < return_values.size(); j++){
-            hold += 100 * return_values.at(j).at(i);
-        }
-        final_vals.push_back(int(hold/return_values.size()));
-    }
-
-    //push first value as a center
-    clusters.push_back({std::vector<int>({final_vals.at(0)})});
-    clusters_idx.push_back({std::vector<int>({0})});
-
-    //cluster
-    for (int i = 1; i < final_vals.size(); i++){
-        
-        bool added = false;
-        for(int j = 0; j < clusters.size(); j++){
-
-            if (final_vals.at(i) > clusters.at(j).at(0) - eps && final_vals.at(i) < clusters.at(j).at(0) + eps){
-                clusters.at(j).push_back(final_vals.at(i));
-                clusters_idx.at(j).push_back(i);
-                added = true;
-            }
-
-        }
-
-        //make new cluster if it doesn't fit any
-        if (!added){
-            clusters.push_back({std::vector<int>({final_vals.at(i)})});
-            clusters_idx.push_back(std::vector<int>({i}));
-        }
-    }
-
-    //figure out which cores are which tier (only A and B tier for now)
-    std::vector<char> cluster_names;
-    if (clusters_idx.size() == 2){
-        if (final_vals.at(clusters_idx.at(0).at(0)) > final_vals.at(clusters_idx.at(1).at(0))){
-            cluster_names.push_back('A');
-            cluster_names.push_back('B');
-        }
-        else if (final_vals.at(clusters_idx.at(0).at(0)) < final_vals.at(clusters_idx.at(1).at(0))){
-            cluster_names.push_back('B');
-            cluster_names.push_back('A');
-        }
-    }
-    else if (clusters_idx.size() == 1){
-        cluster_names.push_back('A');
-    }
-
-
-
-    for (int i = 0; i < clusters_idx.size(); i++){
-        std::cout << cluster_names.at(i) << "-Cores:\n";
-        for (int j = 0; j < clusters_idx.at(i).size(); j++){
-            std::cout << std::left << std::setw(30) << "Core " << clusters_idx.at(i).at(j) << std::endl;
-        }
-    }
-}
+#include "mapping_module.hpp"
 
 int main(){
-    
-    std::vector<std::vector<int>> runs;
-    std::vector<int> int_runs = run_test<int>();
-    runs.push_back(int_runs);
 
-    std::vector<int> float_runs = run_test<float>();
-    runs.push_back(float_runs);
+    class core_mapper::core_mapping core_hierarchy = core_mapper::map_core_topology(true);
 
-    std::vector<int> vector_runs = run_test<int[1][1]>();
-    runs.push_back(vector_runs);
-
-    print(runs);
+    std::cout << "A-Cores:" << std::endl;
+    for(int i = 0 ; i < core_hierarchy.A_cores.get_cores().size(); i++){
+        std::cout << std::left << std::setw(30) << "Core " << core_hierarchy.A_cores.get_cores().at(i) << std::endl;
+    }
+    std::cout << "B-Cores:" << std::endl;
+    for(int i = 0 ; i < core_hierarchy.B_cores.get_cores().size(); i++){
+        std::cout << std::left << std::setw(30) << "Core " << core_hierarchy.B_cores.get_cores().at(i) << std::endl;
+    }
 
     return 0;
 }
