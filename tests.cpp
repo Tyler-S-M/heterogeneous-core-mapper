@@ -26,27 +26,28 @@ namespace core_mapper {
 
     #elif defined(__aarch64__) || defined(_M_ARM64)
         void do_matrix_calc(uint8_t mat1[N][N], uint8_t mat2[N][N], uint8_t result[N][N]){
-
-            //can only do 128 bit vectors..... I think....?
-            //make 3 128 bit vectors
-            uint8x16x3_t vec_multi_res;
             
-            int i, j, k;
-            for (i = 0; i < N; i++){
-                for (j = 0; j < N; ++j){
-                    //Stores one element in mat1 and use it in all computations needed before proceeding
-                    //Stores as vector to increase computations per cycle
-                    vst1q_u8(mat1[i], vec_multi_res.val[1]);
-
-                    for (k = 0; k < N; k += 8){
-                        vst1q_u8(mat2[j], vec_multi_res.val[2]);
-                        vst1q_u8(result[i], vec_multi_res.val[0]);
-
-                        //mult -> add -> store
-                        vec_multi_res.val[0] = (vec_multi_res.val[1] + vec_multi_res.val[2]) * vec_multi_res.val[0];
-                    }
-                }
-            }
+    		//can only do 128 bit vectors..... I think....?
+    		//make 3 128 bit vectors
+    		uint8x16x3_t vec_multi_res;
+    		
+    		int i, j, k;
+    		for (i = 0; i < N; i++){
+    			for (j = 0; j < N; ++j){
+    				//Stores one element in mat1 and use it in all computations needed before proceeding
+    				//Stores as vector to increase computations per cycle
+    				vec_multi_res.val[1] = vld1q_u8(mat1[i]);
+    
+    				for (k = 0; k < N; k += 8){
+    					vec_multi_res.val[2] = vld1q_u8(mat2[j]);
+    					vec_multi_res.val[0] = vld1q_u8(result[i]);
+    
+    					//mult -> add -> store
+    					vec_multi_res.val[0] = (vec_multi_res.val[1] + vec_multi_res.val[2]) * vec_multi_res.val[0];
+    					vst1q_u8(result[i], vec_multi_res.val[0]);
+    				}
+    			}
+    		}
         }
 
     #endif
